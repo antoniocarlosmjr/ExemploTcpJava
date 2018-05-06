@@ -1,5 +1,5 @@
 /**
- * @author Tarcisio da Rocha (Prof. DCOMP/UFS)
+ * @author Antonio Martins (DCOMP/UFS)
  */
 package br.ufs.dcomp.ExemploTcpJava;
 
@@ -20,6 +20,16 @@ public class TCPClient{
             System.out.print("[ Enviando mensagem    ..............................  ");
             os.write(buf);
             System.out.println("[OK] ]");
+            
+            byte[] buf_recepcao = new byte[20]; // buffer de recepção
+            System.out.print("[ Aguardando recebimento de mensagem   ..............  ");
+            is.read(buf_recepcao); // Operação bloqueante (aguardando chegada de dados)
+            System.out.println("[OK] ]");
+            
+            String msg_recebida = new String(buf_recepcao); // Mapeando vetor de bytes recebido para String
+            
+            System.out.println("  Mensagem recebida: "+ msg_recebida);
+            
         }catch(Exception e){System.out.println(e);}    
         System.out.println("[ FIM ]");
     }
