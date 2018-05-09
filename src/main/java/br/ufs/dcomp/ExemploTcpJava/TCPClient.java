@@ -23,18 +23,20 @@ public class TCPClient{
             while (true) {
                 System.out.println("Digite sua mensagem:");
                 msg = sc.nextLine();
-                if (msg.intern() != "exit") {
-                    byte[] buf = msg.getBytes(); // Obtendo a respresntação em bytes da mensagem
-                    System.out.print("[ Enviando mensagem    ..............................  ");
-                    os.write(buf);
-                    System.out.println("[OK] ]");
                 
+                byte[] buf = msg.getBytes(); // Obtendo a respresntação em bytes da mensagem
+                System.out.print("[ Enviando mensagem    ..............................  ");
+                os.write(buf);
+                System.out.println("[OK] ]");
+                    
+                if (msg.intern() != "exit") {
                     byte[] buf_recepcao = new byte[50]; // buffer de recepção
                     System.out.print("[ Aguardando recebimento de mensagem   ..............  ");
                     is.read(buf_recepcao); // Operação bloqueante (aguardando chegada de dados)
                     System.out.println("[OK] ]");
                     String msg_recebida = new String(buf_recepcao);
-                    if (msg_recebida != null) {
+                    msg_recebida = msg_recebida.trim();
+                    if (msg_recebida.intern() != "exit") {
                         System.out.println("  Mensagem recebida: "+ msg_recebida);    
                     } else {
                         System.out.println("[ FIM ]");

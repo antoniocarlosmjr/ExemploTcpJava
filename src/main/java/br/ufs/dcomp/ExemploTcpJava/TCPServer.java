@@ -31,19 +31,18 @@ public class TCPServer{
                 is.read(buf); // Operação bloqueante (aguardando chegada de dados)
                 System.out.println("[OK] ]");
                 String msg = new String(buf); // Mapeando vetor de bytes recebido para String
-                if (msg != null) {
+                msg = msg.trim();
+                if (msg.intern() != "exit") {
                     System.out.println("  Mensagem recebida: "+ msg);
-                    
                     System.out.println("Digite sua mensagem:");
                     msg_resposta = sc.nextLine();
+                    byte[] buf_envio = msg_resposta.getBytes(); 
+                    System.out.print("[ Enviando mensagem de retorno    ...................  ");
+                    os.write(buf_envio);
+                    System.out.println("[OK] ]");
                     if (msg_resposta.intern() == "exit") {
                         System.out.println("[ FIM ]");
                         System.exit(1);
-                    } else {
-                        byte[] buf_envio = msg_resposta.getBytes(); 
-                        System.out.print("[ Enviando mensagem de retorno    ...................  ");
-                        os.write(buf_envio);
-                        System.out.println("[OK] ]");
                     }
                 } else {
                     System.out.println("[ FIM ]");
